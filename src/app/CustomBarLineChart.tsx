@@ -15,6 +15,7 @@ import {
 } from 'recharts';
 import { data } from './mockData';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const CustomTick = ({ x, y, payload }: any) => (
     <g transform={`translate(${x},${y})`}>
         <text
@@ -40,6 +41,7 @@ const CustomTick = ({ x, y, payload }: any) => (
     </g>
 );
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const BarWithDivider = (props: any) => {
     const {
         fill,
@@ -169,6 +171,7 @@ const CustomBarLineChart = () => {
                         tickLine={false}
                     />
                     <Tooltip
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         formatter={(value: any) =>
                             `${Math.round(value / 1000)}k`
                         }
@@ -199,7 +202,8 @@ const CustomBarLineChart = () => {
                         barSize={22}
                         radius={[6, 6, 0, 0]}
                         isAnimationActive={false}
-                        shape={(props) => (
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        shape={(props: any) => (
                             <BarWithDivider
                                 {...props}
                                 dividerValue={props.payload.blueDiv}
@@ -220,7 +224,8 @@ const CustomBarLineChart = () => {
                         barSize={22}
                         radius={[6, 6, 0, 0]}
                         isAnimationActive={false}
-                        shape={(props) => (
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        shape={(props: any) => (
                             <BarWithDivider
                                 {...props}
                                 dividerValue={props.payload.redDiv}

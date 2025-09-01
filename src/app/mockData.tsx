@@ -70,7 +70,6 @@ export const data = [
         blueDiv: 60000, // Lower-middle
         redDiv: 85000, // Near top
         line: 250000,
-        future: true,
     },
     {
         month: 'Sep',

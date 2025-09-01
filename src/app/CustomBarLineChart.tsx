@@ -15,7 +15,6 @@ import {
 } from 'recharts';
 import { data } from './mockData';
 
-// Custom tick for X axis
 const CustomTick = ({ x, y, payload }: any) => (
     <g transform={`translate(${x},${y})`}>
         <text
@@ -23,8 +22,8 @@ const CustomTick = ({ x, y, payload }: any) => (
             y={0}
             dy={12}
             textAnchor="middle"
-            fill="#7D8FAB"
-            fontSize={14}
+            fontSize={11}
+            fontWeight={600}
         >
             {payload.value}
         </text>
@@ -34,14 +33,13 @@ const CustomTick = ({ x, y, payload }: any) => (
             dy={12}
             textAnchor="middle"
             fill="#C0C7D1"
-            fontSize={12}
+            fontSize={11}
         >
             2024
         </text>
     </g>
 );
 
-// Custom bar with divider
 const BarWithDivider = (props: any) => {
     const {
         fill,
@@ -49,30 +47,30 @@ const BarWithDivider = (props: any) => {
         y,
         width,
         height,
+        value,
         dividerValue,
-        yAxis,
         opacity,
         stroke,
         strokeDasharray,
     } = props;
 
-    // Only round the top corners: use path.
-    const topRight = 6; // radius
-    const topLeft = 6; // radius
-
-    // Path for only top corners rounded
+    const dividerWidthPad = 3;
+    const pct = value ? 1 - dividerValue / value : 0;
+    const dividerY = y + height * pct;
+    const cornerRadius = 6;
     const path = `
-      M${x},${y + height}
-      L${x},${y + topLeft}
-      Q${x},${y} ${x + topLeft},${y}
-      L${x + width - topRight},${y}
-      Q${x + width},${y} ${x + width},${y + topRight}
-      L${x + width},${y + height}
-      Z
+        M${x},${y + height}
+        L${x},${y + cornerRadius}
+        Q${x},${y} ${x + cornerRadius},${y}
+        L${x + width - cornerRadius},${y}
+        Q${x + width},${y} ${x + width},${y + cornerRadius}
+        L${x + width},${y + height}
+        Z
     `;
-
-    // Divider position
-    const dividerY = yAxis && yAxis.scale ? yAxis.scale(dividerValue) : y;
+    const dividerX = x - dividerWidthPad;
+    const dividerW = width + dividerWidthPad * 2;
+    const highlightH = 6;
+    const lineH = 3;
 
     return (
         <g>
@@ -84,52 +82,45 @@ const BarWithDivider = (props: any) => {
                 strokeWidth={1.5}
                 strokeDasharray={strokeDasharray}
             />
-            {/* Divider with white underlay and black line */}
             <rect
-                x={x}
-                y={dividerY - 3}
-                width={width}
-                height={6}
+                x={dividerX}
+                y={dividerY - highlightH / 2}
+                width={dividerW}
+                height={highlightH}
                 fill="#fff"
-                rx={3}
-                ry={3}
+                stroke="none"
             />
             <rect
-                x={x + 2}
-                y={dividerY - 1}
-                width={width - 4}
-                height={2}
+                x={dividerX}
+                y={dividerY - lineH / 2}
+                width={dividerW}
+                height={lineH}
                 fill="#232B38"
-                rx={1}
-                ry={1}
+                stroke="none"
             />
         </g>
     );
 };
 
 const CustomBarLineChart = () => {
-    // Find where to start dashed/future
     const futureIndex = data.findIndex((d) => d.future);
     const refAreaStart = futureIndex > -1 ? data[futureIndex].month : undefined;
     const refAreaEnd = data[data.length - 1].month;
 
     return (
-        <div
-            style={{ width: '100%', height: 400 }}
-            className="bg-white p-4 rounded-xl shadow"
-        >
+        <div style={{ width: '100%', height: 450 }}>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                     data={data}
                     margin={{ top: 36, right: 38, left: 5, bottom: 28 }}
+                    barGap={8}
                 >
-                    {/* Subtle grid */}
                     <CartesianGrid
                         stroke="#E5EAF2"
-                        strokeDasharray="2 4"
+                        strokeDasharray="3 4"
                         vertical={false}
+                        horizontal={true}
                     />
-                    {/* Shaded area for future months */}
                     {futureIndex > -1 && (
                         <ReferenceArea
                             x1={refAreaStart}
@@ -145,13 +136,19 @@ const CustomBarLineChart = () => {
                         tick={CustomTick}
                         axisLine={false}
                         tickLine={false}
-                        padding={{ left: 20, right: 20 }}
+                        padding={{ left: 40, right: 40 }}
                         fontSize={14}
                     />
                     <YAxis
                         yAxisId="left"
                         domain={[0, 350000]}
-                        tick={{ fontSize: 13, fill: '#B0B8C1' }}
+                        tickCount={8}
+                        interval={0}
+                        tick={{
+                            fontSize: 11,
+                            fontWeight: 600,
+                            fill: '#4B5563',
+                        }}
                         tickFormatter={(v) => `${Math.round(v / 1000)}k`}
                         axisLine={false}
                         tickLine={false}
@@ -160,7 +157,13 @@ const CustomBarLineChart = () => {
                         yAxisId="right"
                         orientation="right"
                         domain={[0, 350000]}
-                        tick={{ fontSize: 13, fill: '#B0B8C1' }}
+                        tickCount={8}
+                        interval={0}
+                        tick={{
+                            fontSize: 11,
+                            fontWeight: 600,
+                            fill: '#4B5563',
+                        }}
                         tickFormatter={(v) => `${Math.round(v / 1000)}k`}
                         axisLine={false}
                         tickLine={false}
@@ -170,7 +173,7 @@ const CustomBarLineChart = () => {
                             `${Math.round(value / 1000)}k`
                         }
                         contentStyle={{
-                            backgroundColor: '#fff',
+                            backgroundColor: '#F5F6FA',
                             borderRadius: 8,
                             fontSize: 14,
                             border: 'none',
@@ -188,7 +191,6 @@ const CustomBarLineChart = () => {
                             marginBottom: 8,
                         }}
                     />
-                    {/* Blue Bars */}
                     <Bar
                         yAxisId="left"
                         dataKey="blue"
@@ -210,7 +212,6 @@ const CustomBarLineChart = () => {
                             />
                         )}
                     />
-                    {/* Red Bars */}
                     <Bar
                         yAxisId="left"
                         dataKey="red"
@@ -232,7 +233,6 @@ const CustomBarLineChart = () => {
                             />
                         )}
                     />
-                    {/* @ts-ignore */}
                     <Line
                         yAxisId="right"
                         type="monotone"
@@ -241,15 +241,15 @@ const CustomBarLineChart = () => {
                         stroke="#1D915C"
                         strokeWidth={2}
                         strokeDasharray="7 7"
+                        connectNulls
                         dot={{
                             r: 3,
-                            fill: '#1D915C',
-                            stroke: '#1D915C',
+                            fill: '#176846',
                             strokeWidth: 0,
                         }}
                         activeDot={{
                             r: 5,
-                            fill: '#1D915C',
+                            fill: '#176846',
                             stroke: '#1D915C',
                             strokeWidth: 0,
                         }}

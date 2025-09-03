@@ -56,34 +56,32 @@ const BarWithDivider = (props: any) => {
         strokeDasharray,
     } = props;
 
+    // Divider math as before
     const dividerWidthPad = 3;
     const pct = value ? 1 - dividerValue / value : 0;
     const dividerY = y + height * pct;
     const cornerRadius = 6;
-    const path = `
-        M${x},${y + height}
-        L${x},${y + cornerRadius}
-        Q${x},${y} ${x + cornerRadius},${y}
-        L${x + width - cornerRadius},${y}
-        Q${x + width},${y} ${x + width},${y + cornerRadius}
-        L${x + width},${y + height}
-        Z
-    `;
     const dividerX = x - dividerWidthPad;
     const dividerW = width + dividerWidthPad * 2;
     const highlightH = 6;
     const lineH = 3;
 
     return (
-        <g>
-            <path
-                d={path}
+        <>
+            {/* Main bar */}
+            <rect
+                x={x}
+                y={y}
+                width={width}
+                height={height}
                 fill={fill}
                 opacity={opacity}
                 stroke={stroke}
                 strokeWidth={1.5}
                 strokeDasharray={strokeDasharray}
+                rx={cornerRadius}
             />
+            {/* Divider highlight */}
             <rect
                 x={dividerX}
                 y={dividerY - highlightH / 2}
@@ -91,7 +89,9 @@ const BarWithDivider = (props: any) => {
                 height={highlightH}
                 fill="#fff"
                 stroke="none"
+                pointerEvents="none"
             />
+            {/* Divider line */}
             <rect
                 x={dividerX}
                 y={dividerY - lineH / 2}
@@ -99,8 +99,9 @@ const BarWithDivider = (props: any) => {
                 height={lineH}
                 fill="#232B38"
                 stroke="none"
+                pointerEvents="none"
             />
-        </g>
+        </>
     );
 };
 
@@ -139,13 +140,11 @@ const CustomBarLineChart = () => {
                         axisLine={false}
                         tickLine={false}
                         padding={{ left: 40, right: 40 }}
-                        fontSize={14}
                     />
                     <YAxis
                         yAxisId="left"
                         domain={[0, 350000]}
                         tickCount={8}
-                        interval={0}
                         tick={{
                             fontSize: 11,
                             fontWeight: 600,
@@ -160,7 +159,6 @@ const CustomBarLineChart = () => {
                         orientation="right"
                         domain={[0, 350000]}
                         tickCount={8}
-                        interval={0}
                         tick={{
                             fontSize: 11,
                             fontWeight: 600,
@@ -194,6 +192,7 @@ const CustomBarLineChart = () => {
                             marginBottom: 8,
                         }}
                     />
+
                     <Bar
                         yAxisId="left"
                         dataKey="blue"

@@ -16,8 +16,18 @@ import {
     Cell,
 } from 'recharts';
 import { data } from './mockData';
+import SleekBrushTraveller from './SleekBrushtraveller';
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({
+    active,
+    payload,
+    label,
+}: {
+    active?: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload?: any[];
+    label?: string;
+}) => {
     if (active && payload && payload.length) {
         const d = payload[0].payload;
         return (
@@ -139,7 +149,7 @@ const GoNutsChart = () => {
             <ResponsiveContainer width="100%" height="90%">
                 <BarChart
                     data={data}
-                    margin={{ top: 20, right: 0, left: 0, bottom: 24 }}
+                    margin={{ top: 20, right: 40, left: 40, bottom: 24 }}
                     barGap={8}
                     onMouseLeave={() => setBrushIdx({ ...brushIdx })}
                 >
@@ -231,19 +241,39 @@ const GoNutsChart = () => {
                             letterSpacing: 0.5,
                         }}
                     />
-
                     <YAxis
                         yAxisId="left"
                         domain={[0, 350000]}
                         tickCount={8}
-                        tick={{
-                            fontSize: 12,
-                            fontWeight: 600,
-                            fill: '#475569',
-                        }}
-                        tickFormatter={(v) => `${Math.round(v / 1000)}k`}
+                        width={60}
+                        padding={{ top: 18, bottom: 14 }}
+                        minTickGap={8}
+                        mirror={false}
+                        tickMargin={8}
+                        angle={0}
                         axisLine={false}
                         tickLine={false}
+                        reversed={false}
+                        label={{
+                            value: 'Revenue (k$)',
+                            angle: -90,
+                            position: 'insideLeft',
+                            offset: -10,
+                            style: {
+                                fontSize: 15,
+                                fontWeight: 700,
+                                fill: '#334155',
+                                letterSpacing: 0.5,
+                            },
+                        }}
+                        tick={{
+                            fontSize: 13,
+                            fontWeight: 600,
+                            fill: '#475569',
+                            fontFamily: 'Inter, sans-serif',
+                            letterSpacing: 0.1,
+                        }}
+                        tickFormatter={(v) => `${Math.round(v / 1000)}k`}
                     />
 
                     <YAxis
@@ -251,6 +281,18 @@ const GoNutsChart = () => {
                         orientation="right"
                         domain={[0, 350000]}
                         tickCount={8}
+                        label={{
+                            value: 'Users (k)',
+                            angle: 90,
+                            position: 'insideRight',
+                            offset: -10,
+                            style: {
+                                fontSize: 15,
+                                fontWeight: 700,
+                                fill: '#F43F5E',
+                                letterSpacing: 0.5,
+                            },
+                        }}
                         tick={{
                             fontSize: 12,
                             fontWeight: 600,
@@ -262,7 +304,13 @@ const GoNutsChart = () => {
                     />
 
                     <Tooltip
-                        content={<CustomTooltip />}
+                        content={
+                            <CustomTooltip
+                                active={undefined}
+                                payload={undefined}
+                                label={undefined}
+                            />
+                        }
                         cursor={{ fill: '#E0E7EF', opacity: 0.35 }}
                     />
 
@@ -362,20 +410,15 @@ const GoNutsChart = () => {
                             />
                         ))}
                     </Bar>
-
                     <Brush
                         dataKey="month"
-                        height={20}
-                        stroke="#2563eb" // handle border color (blue)
-                        fill="#f1f5f9" // background of brush area
-                        travellerWidth={18} // slightly wider for touch
-                        handleStyle={{
-                            fill: '#fff', // handle fill (white)
-                            stroke: '#5B8DEF', // handle border blue
-                            rx: 4, // rounded corners
-                            ry: 4,
-                            filter: 'drop-shadow(0 1px 4px #5B8DEF33)',
-                        }}
+                        height={22}
+                        stroke="#3730A3"
+                        fill="#E0E7EF"
+                        travellerWidth={20}
+                        traveller={(props) => (
+                            <SleekBrushTraveller {...props} />
+                        )}
                         startIndex={brushIdx.startIndex}
                         endIndex={brushIdx.endIndex}
                         onChange={setBrushIdx}

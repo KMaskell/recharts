@@ -201,6 +201,7 @@ const CustomBarLineChart = () => {
                         barSize={22}
                         radius={[6, 6, 0, 0]}
                         isAnimationActive={false}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         shape={(props: any) => (
                             <BarWithDivider
                                 {...props}
@@ -222,6 +223,7 @@ const CustomBarLineChart = () => {
                         barSize={22}
                         radius={[6, 6, 0, 0]}
                         isAnimationActive={false}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         shape={(props: any) => (
                             <BarWithDivider
                                 {...props}

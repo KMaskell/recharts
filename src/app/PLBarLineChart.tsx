@@ -10,7 +10,6 @@ import {
     CartesianGrid,
     Tooltip,
     Legend,
-    ReferenceArea,
     ResponsiveContainer,
 } from 'recharts';
 import { data } from './mockData';
@@ -105,11 +104,7 @@ const BarWithDivider = (props: any) => {
     );
 };
 
-const CustomBarLineChart = () => {
-    const futureIndex = data.findIndex((d) => d.future);
-    const refAreaStart = futureIndex > -1 ? data[futureIndex].month : undefined;
-    const refAreaEnd = data[data.length - 1].month;
-
+const PLBarLineChart = () => {
     return (
         <div style={{ width: '100%', height: 450 }}>
             <ResponsiveContainer width="100%" height="100%">
@@ -124,16 +119,7 @@ const CustomBarLineChart = () => {
                         vertical={false}
                         horizontal={true}
                     />
-                    {futureIndex > -1 && (
-                        <ReferenceArea
-                            x1={refAreaStart}
-                            x2={refAreaEnd}
-                            y1="auto"
-                            y2="auto"
-                            fill="#E5F0FA"
-                            fillOpacity={0.8}
-                        />
-                    )}
+
                     <XAxis
                         dataKey="month"
                         tick={CustomTick}
@@ -267,4 +253,4 @@ const CustomBarLineChart = () => {
     );
 };
 
-export default CustomBarLineChart;
+export default PLBarLineChart;

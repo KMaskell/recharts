@@ -43,3 +43,21 @@ export type TravellerProps = {
     stroke?: SVGAttributes<SVGElement>['stroke'];
 };
 export declare function Brush(outsideProps: Props): React.JSX.Element;
+
+export type ChartDatum = {
+    month: string;
+    blue: number;
+    blueErrLow: number;
+    blueErrHigh: number;
+    red: number;
+    redErrLow: number;
+    redErrHigh: number;
+    line: number;
+    future: boolean;
+};
+
+export type CustomTooltipProps = {
+    active?: boolean;
+    payload?: Array<{ payload: ChartDatum }>;
+    label?: string;
+};

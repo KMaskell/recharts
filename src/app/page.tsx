@@ -8,6 +8,7 @@ import AdvancedFeaturesBarChart from './AdvancedFeaturesBarChart/AdvancedFeature
 import ChartSection from './ChartSection';
 import OnlyReferenceBarChart from './OnlyReferenceBarChart';
 import AreaOnlyChart from './AreaOnlyChart';
+import HoverableBarLineChart from './HoverableBarLineChart';
 
 const Home = () => (
     <Flex direction="column" justify="center" align="center">
@@ -80,6 +81,14 @@ const Home = () => (
                 ]}
             >
                 <AreaOnlyChart />
+            </ChartSection>
+            <ChartSection
+                title="Hoverable Bar + Line"
+                features={[
+                    'Shows horizontal cartesian grid lines only on hover',
+                ]}
+            >
+                <HoverableBarLineChart />
             </ChartSection>
         </Flex>
     </Flex>

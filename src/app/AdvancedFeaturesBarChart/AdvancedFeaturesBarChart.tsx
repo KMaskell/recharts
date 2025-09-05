@@ -18,7 +18,7 @@ import {
 } from 'recharts';
 import { Box, Flex } from '@radix-ui/themes';
 import { ChartDatum, CustomTooltipProps } from '../types';
-import { data } from '../mockData';
+import { data } from '../XAxesToggleChart/mockData';
 
 // --- ErrorBar expects a function that returns [low, high] ---
 const renderBlueError = (d: ChartDatum) =>
@@ -213,62 +213,70 @@ const AdvancedFeaturesBarChart: React.FC = () => {
 
                     <YAxis
                         yAxisId="left"
-                        domain={[0, 350000]}
-                        tickCount={8}
+                        domain={[0, 200000]}
+                        tickCount={5}
                         width={60}
                         padding={{ top: 18, bottom: 14 }}
                         minTickGap={8}
                         mirror={false}
-                        tickMargin={8}
+                        tickMargin={12}
                         angle={0}
                         axisLine={false}
                         tickLine={false}
-                        reversed={false}
                         label={{
-                            value: 'Revenue (k$)',
+                            value: 'Income/Outcome (£)',
                             angle: -90,
                             position: 'insideLeft',
-                            offset: -10,
+                            offset: -25,
                             style: {
                                 fontSize: 15,
                                 fontWeight: 700,
-                                fill: '#334155',
                                 letterSpacing: 0.5,
+                                fontFamily: 'Inter, sans-serif',
+                            },
+                        }}
+                        tick={{
+                            fontSize: 14,
+                            fontWeight: 700,
+                            fill: '#3B82F6',
+                            fontFamily: 'Inter, sans-serif',
+                            letterSpacing: 0.2,
+                        }}
+                        tickFormatter={(v) =>
+                            v === 0 ? '0' : `${Math.round(v / 1000)}k`
+                        }
+                    />
+                    <YAxis
+                        yAxisId="right"
+                        orientation="right"
+                        domain={[0, 1000000]}
+                        tickCount={6}
+                        label={{
+                            value: 'Cash Balance (£)',
+                            angle: 90,
+                            position: 'insideRight',
+                            offset: -15,
+                            style: {
+                                fontSize: 15,
+                                fontWeight: 700,
+                                letterSpacing: 0.5,
+                                fontFamily: 'Inter, sans-serif',
                             },
                         }}
                         tick={{
                             fontSize: 13,
-                            fontWeight: 600,
-                            fill: '#475569',
+                            fontWeight: 700,
+                            fill: '#16A34A',
                             fontFamily: 'Inter, sans-serif',
                             letterSpacing: 0.1,
                         }}
-                        tickFormatter={(v) => `${Math.round(v / 1000)}k`}
-                    />
-
-                    <YAxis
-                        yAxisId="right"
-                        orientation="right"
-                        domain={[0, 350000]}
-                        tickCount={8}
-                        label={{
-                            value: 'Users (k)',
-                            angle: 90,
-                            position: 'insideRight',
-                            offset: -10,
-                            style: {
-                                fontSize: 15,
-                                fontWeight: 700,
-                                fill: '#F43F5E',
-                                letterSpacing: 0.5,
-                            },
-                        }}
-                        tick={{
-                            fontSize: 12,
-                            fontWeight: 600,
-                            fill: '#475569',
-                        }}
-                        tickFormatter={(v) => `${Math.round(v / 1000)}k`}
+                        tickFormatter={(v) =>
+                            v === 0
+                                ? '0'
+                                : `${(v / 1_000_000)
+                                      .toFixed(1)
+                                      .replace(/\.0$/, '')}M`
+                        }
                         axisLine={false}
                         tickLine={false}
                     />

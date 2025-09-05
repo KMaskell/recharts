@@ -13,6 +13,8 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 import { data } from './mockData';
+import CustomLegend from './XAxesToggleChart/CustomLegend';
+import { Flex } from '@radix-ui/themes';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const CustomTick = ({ x, y, payload }: any) => (
@@ -106,7 +108,8 @@ const BarWithDivider = (props: any) => {
 
 const PLBarLineChart = () => {
     return (
-        <div style={{ width: '100%', height: 450 }}>
+        <Flex width="100%" direction="column" pl="30px" style={{ height: 450 }}>
+            <CustomLegend />
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                     data={data}
@@ -129,30 +132,66 @@ const PLBarLineChart = () => {
                     />
                     <YAxis
                         yAxisId="left"
-                        domain={[0, 350000]}
-                        tickCount={8}
-                        tick={{
-                            fontSize: 11,
-                            fontWeight: 600,
-                            fill: '#4B5563',
-                        }}
-                        tickFormatter={(v) => `${Math.round(v / 1000)}k`}
+                        domain={[0, 100000]}
+                        tickCount={5}
                         axisLine={false}
                         tickLine={false}
+                        tick={{
+                            fontSize: 12,
+                            fontWeight: 700,
+                            fill: '#3B82F6',
+                            fontFamily: 'Inter, sans-serif',
+                            letterSpacing: 0.2,
+                        }}
+                        tickFormatter={(v) =>
+                            v === 0 ? '0' : `${Math.round(v / 1000)}k`
+                        }
+                        label={{
+                            value: 'Income/Outcome (£)',
+                            angle: -90,
+                            position: 'insideLeft',
+                            offset: 0,
+                            style: {
+                                fontSize: 15,
+                                fontWeight: 700,
+                                letterSpacing: 0.5,
+                                fontFamily: 'Inter, sans-serif',
+                            },
+                        }}
                     />
                     <YAxis
                         yAxisId="right"
                         orientation="right"
-                        domain={[0, 350000]}
-                        tickCount={8}
-                        tick={{
-                            fontSize: 11,
-                            fontWeight: 600,
-                            fill: '#4B5563',
-                        }}
-                        tickFormatter={(v) => `${Math.round(v / 1000)}k`}
+                        domain={[0, 1000000]}
+                        tickCount={6}
                         axisLine={false}
                         tickLine={false}
+                        tick={{
+                            fontSize: 12,
+                            fontWeight: 700,
+                            fill: '#1D915C',
+                            fontFamily: 'Inter, sans-serif',
+                            letterSpacing: 0.2,
+                        }}
+                        tickFormatter={(v) =>
+                            v === 0
+                                ? '0'
+                                : `${(v / 1_000_000)
+                                      .toFixed(1)
+                                      .replace(/\.0$/, '')}M`
+                        }
+                        label={{
+                            value: 'Cash Balance (£)',
+                            angle: 90,
+                            position: 'insideRight',
+                            offset: -15,
+                            style: {
+                                fontSize: 15,
+                                fontWeight: 700,
+                                letterSpacing: 0.5,
+                                fontFamily: 'Inter, sans-serif',
+                            },
+                        }}
                     />
                     <Tooltip
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -168,17 +207,6 @@ const PLBarLineChart = () => {
                         }}
                         labelStyle={{ color: '#1D915C', fontWeight: 600 }}
                     />
-                    <Legend
-                        verticalAlign="top"
-                        iconType="circle"
-                        align="center"
-                        wrapperStyle={{
-                            fontSize: 14,
-                            color: '#7D8FAB',
-                            marginBottom: 8,
-                        }}
-                    />
-
                     <Bar
                         yAxisId="left"
                         dataKey="blue"
@@ -249,7 +277,7 @@ const PLBarLineChart = () => {
                     />
                 </BarChart>
             </ResponsiveContainer>
-        </div>
+        </Flex>
     );
 };
 

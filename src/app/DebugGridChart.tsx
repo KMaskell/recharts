@@ -10,7 +10,7 @@ import {
     Tooltip,
     Legend,
 } from 'recharts';
-import { data } from './mockData';
+import { data } from './XAxesToggleChart/mockData';
 
 export default function DebugGridChart() {
     return (

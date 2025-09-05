@@ -69,7 +69,7 @@ export const data = [
         red: 37000,
         blueDiv: 25000,
         redDiv: 10000,
-        line: 1000000,
+        line: 1010000,
     },
     {
         month: 'Oct',
@@ -77,7 +77,7 @@ export const data = [
         red: 39000,
         blueDiv: 17000,
         redDiv: 7000,
-        line: 995000,
+        line: 1015000,
     },
     {
         month: 'Nov',
@@ -85,7 +85,7 @@ export const data = [
         red: 41000,
         blueDiv: 9000,
         redDiv: 17000,
-        line: 980000,
+        line: 1030000,
     },
     {
         month: 'Dec',
@@ -93,6 +93,6 @@ export const data = [
         red: 35000,
         blueDiv: 5000,
         redDiv: 12000,
-        line: 960000,
+        line: 1040000,
     },
 ];

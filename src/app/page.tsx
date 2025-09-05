@@ -1,25 +1,19 @@
 'use client';
 
-import { Box, Flex } from '@radix-ui/themes';
+import { Box, Flex, Heading } from '@radix-ui/themes';
 import ChartLoader from './ChartLoader';
 import PLBarLineChart from './PLBarLineChart';
-import XAxesTogglesChart from './GoNutsChart';
+import XAxesTogglesChart from './XAxesToggleChart/XAxesTogglesChart';
 import AdvancedFeaturesBarChart from './AdvancedFeaturesBarChart/AdvancedFeaturesBarChart';
 import ChartSection from './ChartSection';
 import OnlyReferenceBarChart from './OnlyReferenceBarChart';
 import AreaOnlyChart from './AreaOnlyChart';
 
 const Home = () => (
-    <Box
-        style={{
-            minHeight: '100vh',
-            background: '#f8fafc',
-            padding: '2rem',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-        }}
-    >
+    <Flex direction="column" justify="center" align="center">
+        <Heading as="h1" size="8">
+            Recharts Bar Charts Features
+        </Heading>
         <Flex direction="column" gap="8" width="100%" align="center">
             <ChartSection
                 title="Chart Loader"
@@ -88,7 +82,7 @@ const Home = () => (
                 <AreaOnlyChart />
             </ChartSection>
         </Flex>
-    </Box>
+    </Flex>
 );
 
 export default Home;
